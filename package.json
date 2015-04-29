@@ -1,0 +1,35 @@
+{
+  "name": "ol3-photon",
+  "version": "1.0.0",
+  "description": "Port of Leaflet plugin version",
+  "main": "ol3-photon.js",
+  "scripts": {
+    "start": "beefy 8080 --live",
+    "bundle": "npm run prod && npm run minifycss",
+    "check": "npm run jshint && npm run jscs",
+    "debug": "./node_modules/.bin/browserify -s olPhoton src/ol3.photon.js > src/ol3.photon.min.js",
+    "prod": "./node_modules/.bin/browserify -s olPhoton src/ol3.photon.js | uglifyjs -mc > dist/ol3.photon.min.js",
+    "minifycss": "./node_modules/.bin/cleancss -o dist/ol3.photon.min.css src/ol3.photon.css",
+    "jscs": "./node_modules/.bin/jscs --preset=google src/*.js",
+    "jshint": "./node_modules/.bin/jshint src/*.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "photon",
+    "geocoding",
+    "openlayers"
+  ],
+  "author": "Thomas Gratier",
+  "license": "MIT",
+  "devDependencies": {
+    "beefy": "^2.1.5",
+    "browserify": "^9.0.8",
+    "clean-css": "^3.2.6",
+    "js-beautify": "^1.5.5",
+    "jscs": "^1.13.0",
+    "jshint": "^2.7.0"
+  },
+  "dependencies": {
+    "extend": "^2.0.0"
+  }
+}
