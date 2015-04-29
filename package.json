@@ -1,8 +1,8 @@
 {
   "name": "ol3-photon",
   "version": "1.0.0",
-  "description": "Port of Leaflet plugin version",
-  "main": "ol3-photon.js",
+  "description": "OpenLayers 3 port of Leaflet plugin to use Photon geocoder",
+  "main": "dist/ol3-photon.min.js",
   "scripts": {
     "start": "beefy 8080 --live",
     "bundle": "npm run prod && npm run minifycss",
@@ -14,13 +14,19 @@
     "jshint": "./node_modules/.bin/jshint src/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "browser": {
+    "ol": "dist/ol3-photon.min.js",
+  },
+  "style": [
+    "dist/ol3-photon.min.css"
+  ],
   "keywords": [
     "photon",
     "geocoding",
     "openlayers",
     "openstreemap"
   ],
-  "author": "Thomas Gratier",
+  "author": "Thomas Gratier <contact@webgeodatavore.com>",
   "license": "Apache 2.0",
   "devDependencies": {
     "beefy": "^2.1.5",
@@ -32,5 +38,9 @@
   },
   "dependencies": {
     "extend": "^2.0.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/webgeodatavore/ol3-photon/issues"
+  },
+  "homepage": "https://github.com/webgeodatavore/ol3-photon"
 }
