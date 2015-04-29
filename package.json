@@ -17,10 +17,11 @@
   "keywords": [
     "photon",
     "geocoding",
-    "openlayers"
+    "openlayers",
+    "openstreemap"
   ],
   "author": "Thomas Gratier",
-  "license": "MIT",
+  "license": "Apache 2.0",
   "devDependencies": {
     "beefy": "^2.1.5",
     "browserify": "^9.0.8",
