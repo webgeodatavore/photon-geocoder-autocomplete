@@ -39,10 +39,23 @@
         })
       });
 
-      /* Function to show you can do something with the returned element
-      For instance, it could be adding a point on the map */
-      function myHandler(geojson) {
-          console.debug(geojson);
+      // Function to show you can do something with the returned elements
+      function myHandler(featureCollection) {
+          console.debug(featureCollection);
+      }
+      
+      // We reused the default function to center and zoom on selected feature.
+      // You can make your own. For instance, you could center, zoom
+      // and add a point on the map
+      function onSelected(feature) {
+        console.log(feature);
+        var coordinates = ol.proj.transform(
+          [feature.geometry.coordinates[0], feature.geometry.coordinates[1]],
+          'EPSG:4326',
+          map.getView().getProjection()
+        );
+        map.getView().setCenter(coordinates);
+        map.getView().setZoom(16);
       }
 
       // URL for API
@@ -51,6 +64,7 @@
       // Create search by adresses component
       var container = new ol.Photon.Search(map, {
         resultsHandler: myHandler,
+        onSelected: onSelected,
         placeholder: 'Tapez une adresse du type Impasse Juton, Nantes',
         formatResult: formatResult,
         url: API_URL + '/search/?',
