@@ -1,6 +1,6 @@
 {
   "name": "ol3-photon",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OpenLayers 3 port of Leaflet plugin to use Photon geocoder",
   "main": "dist/ol3-photon.min.js",
   "scripts": {
