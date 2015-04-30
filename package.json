@@ -14,9 +14,7 @@
     "jshint": "./node_modules/.bin/jshint src/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "browser": {
-    "ol": "dist/ol3-photon.min.js",
-  },
+  "browser": "dist/ol3-photon.min.js",
   "style": [
     "dist/ol3-photon.min.css"
   ],
@@ -42,5 +40,8 @@
   "bugs": {
     "url": "https://github.com/webgeodatavore/ol3-photon/issues"
   },
-  "homepage": "https://github.com/webgeodatavore/ol3-photon"
+  "homepage": "https://github.com/webgeodatavore/ol3-photon",
+  "repository":"https://github.com/webgeodatavore/ol3-photo",
+  "contributors": [],
+  "engines": {}
 }
