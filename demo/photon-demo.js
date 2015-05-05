@@ -1,8 +1,10 @@
       // Format result in the search input autocomplete
       var formatResult = function(feature, el) {
-          var title = ol.domUtils.create('strong', '', el),
-              detailsContainer = ol.domUtils.create('small', '', el),
-              details = [];
+          var title = document.createElement('strong');
+          el.appendChild(title);
+          var detailsContainer = document.createElement('small');
+          el.appendChild(detailsContainer);
+          var details = [];
           title.innerHTML = feature.properties.label || feature.properties.name;
           var types = {
               housenumber: 'numéro',
@@ -14,7 +16,10 @@
               commune: 'commune'
           };
           if (types[feature.properties.type]) {
-            ol.domUtils.create('span', 'type', title).innerHTML = types[feature.properties.type];
+            var spanType = document.createElement('span');
+            spanType.className = 'type';
+            title.appendChild(spanType);
+            spanType.innerHTML = types[feature.properties.type];
           }
           if (feature.properties.city && feature.properties.city !== feature.properties.name) {
             details.push(feature.properties.city);
@@ -77,7 +82,8 @@
 
       // Select element and set options for reverse geocoding
       // var reverseEl = document.getElementById('reverse');
-      var reverseEl = ol.domUtils.create('div', 'reverse');
+      var reverseEl = document.createElement('div');
+      reverseEl.className = 'reverse';
       var optionsReverse = {
         url: API_URL + '/reverse/?',
         handleResults: function(data) {

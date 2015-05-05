@@ -270,10 +270,9 @@ var Search = function(map, options) {
         [feature.geometry.coordinates[0], feature.geometry.coordinates[1]],
         'EPSG:4326',
         map.getView().getProjection()
-        // 'EPSG:3857'
       );
-      this.map.getView().setCenter(coordinates);
-      this.map.getView().setZoom(16);
+      map.getView().setCenter(coordinates);
+      map.getView().setZoom(16);
     },
 
     onSelected: function(choice) {
@@ -493,13 +492,4 @@ ol.inherits(Photon.AddDomControl, ol.control.Control);
 /**
  * Export utils function
  **/
-// Pattern from jQuery plugin to manage namespace for standalone plugin but applied to ol namespace
-module.exports = (function(ol) {
-  if (window.ol) {
-    window.ol.Photon = Photon;
-    window.ol.domUtils = Utils.dom;
-  } else if (ol) {
-    ol.Photon = Photon;
-    ol.domUtils = Utils.dom;
-  }
-})(ol);
+module.exports = Photon;
