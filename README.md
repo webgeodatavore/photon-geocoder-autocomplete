@@ -2,7 +2,7 @@
 
 It's a direct port of Leaflet-photon code available at https://github.com/komoot/leaflet.photon
 
-The Leaflet demo is in production for the French BANO (Base Adresse Nationale Ouverte), a database dedicated to French adresses.
+The Leaflet demo is in production for the French BAN (Base Adresse Nationale), a database dedicated to French adresses.
 You can see it in action at http://adresse.data.gouv.fr/map/
 
 For the OpenLayers 3 project, we changed some parts and although we didn't try it in other projections, it should work with any projections.
