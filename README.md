@@ -7,13 +7,14 @@ You can see it in action at http://adresse.data.gouv.fr/map/
 
 For the OpenLayers 3 project, we changed some parts and although we didn't try it in other projections, it should work with any projections.
 
-We made the component so you can choose to use:
+We made the component so you can choose to use it with any map libraries like OpenLayers or MapLibre or simply outside without any map part.
 
-* an OpenLayers `control` (hence you can do the `map.addControl` stuff)
-* a simple html container using standalone functions without using OpenLayers controls mechanism (although you are tied to OpenLayers for the zoom part.
+You can see multiples demos in action:
 
-You can see [a demo in action](https://rawgit.com/webgeodatavore/ol3-photon/master/demo/index.html)
+- [with Openlayers](https://rawgit.com/webgeodatavore/photon-geocoder-autocomplete/master/demo/index-ol.html)
+- [with MapLibre](https://rawgit.com/webgeodatavore/photon-geocoder-autocomplete/master/demo/index-maplibre.html)
+- [without a map](https://rawgit.com/webgeodatavore/photon-geocoder-autocomplete/master/demo/index-no-map.html)
 
-Feel free to [open an issue](https://github.com/webgeodatavore/ol3-photon/issues) if you see some errors or improvements to do.
+Feel free to [open an issue](https://github.com/webgeodatavore/photon-geocoder-autocomplete/issues) if you see some errors or improvements to do.
 
 You can also directly contact us at contact(at)@webgeodatavore.com or [ping us on Twitter](http://twitter.com/thomasg77)

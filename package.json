@@ -39,10 +39,10 @@
     "extend": "^2.0.0"
   },
   "bugs": {
-    "url": "https://github.com/webgeodatavore/ol3-photon/issues"
+    "url": "https://github.com/webgeodatavore/photon-geocoder-autocomplete/issues"
   },
-  "homepage": "https://github.com/webgeodatavore/ol3-photon",
-  "repository": "https://github.com/webgeodatavore/ol3-photon",
+  "homepage": "https://github.com/webgeodatavore/photon-geocoder-autocomplete",
+  "repository": "https://github.com/webgeodatavore/photon-geocoder-autocomplete",
   "contributors": [],
   "engines": {}
 }
