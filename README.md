@@ -11,9 +11,9 @@ We made the component so you can choose to use it with any map libraries like Op
 
 You can see multiples demos in action:
 
-- [with Openlayers](https://rawgit.com/webgeodatavore/photon-geocoder-autocomplete/master/demo/index-ol.html)
-- [with MapLibre](https://rawgit.com/webgeodatavore/photon-geocoder-autocomplete/master/demo/index-maplibre.html)
-- [without a map](https://rawgit.com/webgeodatavore/photon-geocoder-autocomplete/master/demo/index-no-map.html)
+- [with Openlayers](https://raw.githack.com/webgeodatavore/photon-geocoder-autocomplete/master/demo/index-ol.html)
+- [with MapLibre](https://raw.githack.com/webgeodatavore/photon-geocoder-autocomplete/master/demo/index-maplibre.html)
+- [without a map](https://raw.githack.com/webgeodatavore/photon-geocoder-autocomplete/master/demo/index-no-map.html)
 
 Feel free to [open an issue](https://github.com/webgeodatavore/photon-geocoder-autocomplete/issues) if you see some errors or improvements to do.
 
