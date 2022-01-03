@@ -58,6 +58,7 @@ PhotonBase.prototype.buildQueryString = function(params) {
 
 /**
  * Render all layers that are children of a group.
+ *
  * @param {feature} feature Layer to be rendered (should have a title property).
  * @return {element} Return popup with content.
  */
@@ -71,7 +72,7 @@ PhotonBase.prototype.featureToPopupContent = function(feature) {
 /**
  *
  **/
-var Search = function(map, options) {
+var Search = function(options) {
   var extended = extend({}, PhotonBase.prototype, {
     options: {
       url: 'http://photon.komoot.de/api/?',
@@ -79,7 +80,7 @@ var Search = function(map, options) {
       minChar: 3,
       limit: 5,
       submitDelay: 300,
-      includePosition: true,
+      includePosition: null, //function() {return [0, 0]},
       noResultLabel: 'No result',
       feedbackEmail: 'photon@komoot.de' // Set to null to remove feedback box
     },
@@ -98,8 +99,7 @@ var Search = function(map, options) {
       ALT: 17,
       CTRL: 18
     },
-    initialize: function(map, input, options) {
-      this.map = map;
+    initialize: function(input, options) {
       this.input = input;
       this.options = extend({}, this.options, options);
       var CURRENT = null;
@@ -266,15 +266,8 @@ var Search = function(map, options) {
       this.ajax(this.handleResults, this);
     },
     _onSelected: function(feature) {
-      var coordinates = ol.proj.transform(
-        [feature.geometry.coordinates[0], feature.geometry.coordinates[1]],
-        'EPSG:4326',
-        map.getView().getProjection()
-      );
-      map.getView().setCenter(coordinates);
-      map.getView().setZoom(16);
+      console.log(feature);
     },
-
     onSelected: function(choice) {
       return (this.options.onSelected || this._onSelected).call(this, choice);
     },
@@ -307,7 +300,9 @@ var Search = function(map, options) {
       ).call(this, feature);
     },
     _formatType: function(feature) {
-      return feature.properties['osm_value'];
+      // jscs:disable
+      return feature.properties.osm_value;
+      // jscs:enable
     },
     createResult: function(feature) {
       var el = Utils.dom.create('li', '', this.resultsContainer);
@@ -397,13 +392,7 @@ var Search = function(map, options) {
       var x;
       var y;
       if (this.options.includePosition) {
-        var coordinates = ol.proj.transform(
-          this.map.getView().getCenter(),
-          this.map.getView().getProjection(), //'EPSG:3857',
-          'EPSG:4326'
-        );
-        x = coordinates[0];
-        y = coordinates[1];
+        [x, y] = this.options.includePosition();
       } else {
         x = y = null;
       }
@@ -420,7 +409,7 @@ var Search = function(map, options) {
   var container = Utils.dom.create('div', null); //, 'ol-photon');
   var input = Utils.dom.create('input', 'photon-input', container);
   var searchPhoton = Object.create(extended);
-  extended.initialize(map, input, options);
+  extended.initialize(input, options);
   return container;
 };
 
@@ -470,7 +459,7 @@ var Reverse = function(options) {
  * Main class for Photon
  **/
 var Photon = {
-  AddDomControl: function(elementToAdd, className, optOptions) {
+  /*AddDomControl: function(elementToAdd, className, optOptions) {
     var options = optOptions || {};
 
     var element = document.createElement('div');
@@ -483,11 +472,11 @@ var Photon = {
       element: element,
       target: options.target
     });
-  },
+  },*/
   Reverse: Reverse,
   Search: Search
 };
-ol.inherits(Photon.AddDomControl, ol.control.Control);
+//ol.inherits(Photon.AddDomControl, ol.control.Control);
 
 /**
  * Export utils function

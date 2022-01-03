@@ -31,23 +31,11 @@
           font: 15px/20px "open_sansregular",sans-serif;
       }
       /* Set map size */
-      .map {
+      #map {
           height: 600px;
           width: 100%;
       }
       /* Set parameters on controls (geocoder and reverse)*/
       input.photon-input {
-          width: 400px;
-      }
-      .photon-geocoder-autocomplete {
-          left: calc(50% - 200px);
-          top: 0.5em;
-      }
-      .photon-reverse-geocoder {
-          background: none repeat scroll 0 0 white;
-          bottom: 0.5em;
-          left: calc(50% - 200px);
-          padding: 10px;
-          text-align: center;
           width: 400px;
       }

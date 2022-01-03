@@ -1,38 +1,41 @@
 {
-  "name": "ol3-photon",
-  "version": "1.0.1",
-  "description": "OpenLayers 3 port of Leaflet plugin to use Photon geocoder",
-  "main": "dist/ol3-photon.min.js",
+  "name": "photon-geocoder-autocomplete",
+  "version": "2.0.0",
+  "description": "Port of Leaflet plugin to use Photon geocoder for autocomplete. Work with any map library including OpenLayers",
+  "main": "dist/photon-geocoder-autocomplete.min.js",
   "scripts": {
     "start": "beefy 8080 --live",
     "bundle": "npm run prod && npm run minifycss",
     "check": "npm run jshint && npm run jscs",
-    "debug": "./node_modules/.bin/browserify -s ol.Photon src/ol3.photon.js > dist/ol3.photon.min.js",
-    "prod": "./node_modules/.bin/browserify -s ol.Photon src/ol3.photon.js | uglifyjs -mc > dist/ol3.photon.min.js",
-    "minifycss": "./node_modules/.bin/cleancss -o dist/ol3.photon.min.css src/ol3.photon.css",
+    "debug": "./node_modules/.bin/browserify -s Photon src/photon-geocoder-autocomplete.js > dist/photon-geocoder-autocomplete.min.js",
+    "prod": "./node_modules/.bin/browserify -s Photon src/photon-geocoder-autocomplete.js | uglifyjs -mc > dist/photon-geocoder-autocomplete.min.js",
+    "minifycss": "./node_modules/.bin/cleancss -o dist/photon-geocoder-autocomplete.min.css src/photon-geocoder-autocomplete.css",
     "jscs": "./node_modules/.bin/jscs --preset=google src/*.js",
     "jshint": "./node_modules/.bin/jshint src/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "browser": "dist/ol3-photon.min.js",
+  "browser": "dist/photon-geocoder-autocomplete.min.js",
   "style": [
-    "dist/ol3-photon.min.css"
+    "dist/photon-geocoder-autocomplete.min.css"
   ],
   "keywords": [
     "photon",
     "geocoding",
     "openlayers",
-    "openstreemap"
+    "openstreemap",
+    "autocomplete"
   ],
   "author": "Thomas Gratier <contact@webgeodatavore.com>",
   "license": "Apache 2.0",
   "devDependencies": {
-    "beefy": "^2.1.5",
-    "browserify": "^9.0.8",
-    "clean-css": "^3.2.6",
+    "beefy": "^0.1.1",
+    "browserify": "^17.0.0",
+    "clean-css": "^5.2.2",
+    "clean-css-cli": "^5.5.0",
     "js-beautify": "^1.5.5",
-    "jscs": "^1.13.0",
-    "jshint": "^2.7.0"
+    "jscs": "^3.0.7",
+    "jshint": "^2.7.0",
+    "uglify-js": "^3.14.5"
   },
   "dependencies": {
     "extend": "^2.0.0"
@@ -41,7 +44,7 @@
     "url": "https://github.com/webgeodatavore/ol3-photon/issues"
   },
   "homepage": "https://github.com/webgeodatavore/ol3-photon",
-  "repository":"https://github.com/webgeodatavore/ol3-photo",
+  "repository": "https://github.com/webgeodatavore/ol3-photon",
   "contributors": [],
   "engines": {}
 }
