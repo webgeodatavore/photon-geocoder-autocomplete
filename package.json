@@ -6,12 +6,9 @@
   "scripts": {
     "start": "beefy 8080 --live",
     "bundle": "npm run prod && npm run minifycss",
-    "check": "npm run jshint && npm run jscs",
     "debug": "./node_modules/.bin/browserify -s Photon src/photon-geocoder-autocomplete.js > dist/photon-geocoder-autocomplete.min.js",
     "prod": "./node_modules/.bin/browserify -s Photon src/photon-geocoder-autocomplete.js | uglifyjs -mc > dist/photon-geocoder-autocomplete.min.js",
     "minifycss": "./node_modules/.bin/cleancss -o dist/photon-geocoder-autocomplete.min.css src/photon-geocoder-autocomplete.css",
-    "jscs": "./node_modules/.bin/jscs --preset=google src/*.js",
-    "jshint": "./node_modules/.bin/jshint src/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "browser": "dist/photon-geocoder-autocomplete.min.js",
@@ -32,9 +29,7 @@
     "browserify": "^17.0.0",
     "clean-css": "^5.2.2",
     "clean-css-cli": "^5.5.0",
-    "js-beautify": "^1.5.5",
-    "jscs": "^3.0.7",
-    "jshint": "^2.7.0",
+    "prettier": "^2.5.1",
     "uglify-js": "^3.14.5"
   },
   "dependencies": {

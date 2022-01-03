@@ -1,33 +1,33 @@
-'use strict';
-var extend = require('extend');
-var Utils = require('./utils');
+"use strict";
+var extend = require("extend");
+var Utils = require("./utils");
 
 /**
  * Base class for the library
  **/
-var PhotonBase = function() {};
+var PhotonBase = function () {};
 /**
  * Help to manage DOM element as array
  * @param {els} els Dom elements
  * @param {function} callback Callback function to use in the loop.
  **/
-PhotonBase.prototype.forEach = function(els, callback) {
+PhotonBase.prototype.forEach = function (els, callback) {
   Array.prototype.forEach.call(els, callback);
 };
 
-PhotonBase.prototype.ajax = function(callback, thisobj) {
-  if (typeof this.xhr === 'object') {
+PhotonBase.prototype.ajax = function (callback, thisobj) {
+  if (typeof this.xhr === "object") {
     this.xhr.abort();
   }
   this.xhr = new XMLHttpRequest();
   this.xhr.open(
-    'GET',
+    "GET",
     this.options.url + this.buildQueryString(this.getParams()),
     true
   );
 
-  this.xhr.onload = function(e) {
-    var eventAjaxReturn = new Event('ajax:return');
+  this.xhr.onload = function (e) {
+    var eventAjaxReturn = new Event("ajax:return");
     document.dispatchEvent(eventAjaxReturn);
     if (this.status === 200) {
       if (callback) {
@@ -39,21 +39,21 @@ PhotonBase.prototype.ajax = function(callback, thisobj) {
     delete this.xhr;
   };
 
-  var eventAjaxSend = new Event('ajax:send');
+  var eventAjaxSend = new Event("ajax:send");
   document.dispatchEvent(eventAjaxSend);
   this.xhr.send();
 };
 
-PhotonBase.prototype.buildQueryString = function(params) {
+PhotonBase.prototype.buildQueryString = function (params) {
   var queryString = [];
   for (var key in params) {
     if (params[key]) {
       queryString.push(
-        encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
+        encodeURIComponent(key) + "=" + encodeURIComponent(params[key])
       );
     }
   }
-  return queryString.join('&');
+  return queryString.join("&");
 };
 
 /**
@@ -62,9 +62,9 @@ PhotonBase.prototype.buildQueryString = function(params) {
  * @param {feature} feature Layer to be rendered (should have a title property).
  * @return {element} Return popup with content.
  */
-PhotonBase.prototype.featureToPopupContent = function(feature) {
-  var container = Utils.dom.create('div', 'ol-photon-popup');
-  var title = Utils.dom.create('h3', '', container);
+PhotonBase.prototype.featureToPopupContent = function (feature) {
+  var container = Utils.dom.create("div", "ol-photon-popup");
+  var title = Utils.dom.create("h3", "", container);
   title.innerHTML = feature.properties.label;
   return container;
 };
@@ -72,19 +72,19 @@ PhotonBase.prototype.featureToPopupContent = function(feature) {
 /**
  *
  **/
-var Search = function(options) {
+var Search = function (options) {
   var extended = extend({}, PhotonBase.prototype, {
     options: {
-      url: 'http://photon.komoot.de/api/?',
-      placeholder: 'Start typing...',
+      url: "http://photon.komoot.de/api/?",
+      placeholder: "Start typing...",
       minChar: 3,
       limit: 5,
       submitDelay: 300,
       includePosition: null, //function() {return [0, 0]},
-      noResultLabel: 'No result',
-      feedbackEmail: 'photon@komoot.de' // Set to null to remove feedback box
+      noResultLabel: "No result",
+      feedbackEmail: "photon@komoot.de", // Set to null to remove feedback box
     },
-    CACHE: '',
+    CACHE: "",
     RESULTS: [],
     KEYS: {
       LEFT: 37,
@@ -97,60 +97,60 @@ var Search = function(options) {
       APPLE: 91,
       SHIFT: 16,
       ALT: 17,
-      CTRL: 18
+      CTRL: 18,
     },
-    initialize: function(input, options) {
+    initialize: function (input, options) {
       this.input = input;
       this.options = extend({}, this.options, options);
       var CURRENT = null;
 
       try {
-        Object.defineProperty(this, 'CURRENT', {
-          get: function() {
+        Object.defineProperty(this, "CURRENT", {
+          get: function () {
             return CURRENT;
           },
-          set: function(index) {
-            if (typeof index === 'object') {
+          set: function (index) {
+            if (typeof index === "object") {
               index = this.resultToIndex(index);
             }
             CURRENT = index;
-          }
+          },
         });
       } catch (e) {
         // Hello IE8
       }
-      this.input.type = 'search';
+      this.input.type = "search";
       this.input.placeholder = this.options.placeholder;
-      this.input.autocomplete = 'off';
-      this.input.autocorrect = 'off';
+      this.input.autocomplete = "off";
+      this.input.autocorrect = "off";
 
-      this.input.addEventListener('keydown', this.onKeyDown.bind(this), false);
-      this.input.addEventListener('input', this.onInput.bind(this), false);
-      this.input.addEventListener('blur', this.onBlur.bind(this), false);
-      this.input.addEventListener('focus', this.onFocus.bind(this), false);
+      this.input.addEventListener("keydown", this.onKeyDown.bind(this), false);
+      this.input.addEventListener("input", this.onInput.bind(this), false);
+      this.input.addEventListener("blur", this.onBlur.bind(this), false);
+      this.input.addEventListener("focus", this.onFocus.bind(this), false);
       this.createResultsContainer();
     },
-    createResultsContainer: function() {
+    createResultsContainer: function () {
       this.resultsContainer = Utils.dom.create(
-        'ul',
-        'photon-autocomplete',
-        document.querySelector('body')
+        "ul",
+        "photon-autocomplete",
+        document.querySelector("body")
       );
     },
-    resizeContainer: function() {
+    resizeContainer: function () {
       var l = this.getLeft(this.input);
       var t = this.getTop(this.input) + this.input.offsetHeight;
-      this.resultsContainer.style.left = l + 'px';
-      this.resultsContainer.style.top = t + 'px';
+      this.resultsContainer.style.left = l + "px";
+      this.resultsContainer.style.top = t + "px";
       var width;
       if (this.options.width) {
         width = this.options.width;
       } else {
         width = this.input.offsetWidth - 2;
       }
-      this.resultsContainer.style.width = width + 'px';
+      this.resultsContainer.style.width = width + "px";
     },
-    onKeyDown: function(e) {
+    onKeyDown: function (e) {
       switch (e.keyCode) {
         case this.KEYS.TAB:
           if (this.CURRENT !== null) {
@@ -169,8 +169,11 @@ var Search = function(options) {
           break;
         case this.KEYS.DOWN:
           if (this.RESULTS.length > 0) {
-            if (this.CURRENT !== null &&
-                this.CURRENT < this.RESULTS.length - 1) { // what if one resutl?
+            if (
+              this.CURRENT !== null &&
+              this.CURRENT < this.RESULTS.length - 1
+            ) {
+              // what if one resutl?
               this.CURRENT++;
               this.highlight();
             } else if (this.CURRENT === null) {
@@ -195,8 +198,8 @@ var Search = function(options) {
           break;
       }
     },
-    onInput: function(e) {
-      if (typeof this.submitDelay === 'number') {
+    onInput: function (e) {
+      if (typeof this.submitDelay === "number") {
         window.clearTimeout(this.submitDelay);
         delete this.submitDelay;
       }
@@ -205,49 +208,50 @@ var Search = function(options) {
         this.options.submitDelay
       );
     },
-    onBlur: function(e) {
-      var eventBlur = new Event('blur');
+    onBlur: function (e) {
+      var eventBlur = new Event("blur");
       document.dispatchEvent(eventBlur);
-      setTimeout(function() {
-        this.hide();
-      }.bind(this), 100);
+      setTimeout(
+        function () {
+          this.hide();
+        }.bind(this),
+        100
+      );
     },
-    onFocus: function(e) {
-      var eventFocus = new Event('focus');
+    onFocus: function (e) {
+      var eventFocus = new Event("focus");
       document.dispatchEvent(eventFocus);
       this.input.select();
       this.search(); // In case we have a value from a previous search.
     },
-    clear: function() {
+    clear: function () {
       this.RESULTS = [];
       this.CURRENT = null;
-      this.CACHE = '';
-      this.resultsContainer.innerHTML = '';
+      this.CACHE = "";
+      this.resultsContainer.innerHTML = "";
     },
-    hide: function() {
-      var eventHide = new Event('hide');
+    hide: function () {
+      var eventHide = new Event("hide");
       document.dispatchEvent(eventHide);
       this.clear();
-      this.resultsContainer.style.display = 'none';
+      this.resultsContainer.style.display = "none";
     },
-    setChoice: function(choice) {
+    setChoice: function (choice) {
       choice = choice || this.RESULTS[this.CURRENT];
       if (choice) {
         this.hide();
-        this.input.value = '';
-        var eventSelected = new CustomEvent(
-          'selected', {
-            choice: choice.feature
-          }
-        );
+        this.input.value = "";
+        var eventSelected = new CustomEvent("selected", {
+          choice: choice.feature,
+        });
         document.dispatchEvent(eventSelected);
         this.onSelected(choice.feature);
       }
     },
-    search: function() {
+    search: function () {
       var val = this.input.value;
       var minChar;
-      if (typeof this.options.minChar === 'function') {
+      if (typeof this.options.minChar === "function") {
         minChar = this.options.minChar(val);
       } else {
         minChar = val.length >= this.options.minChar;
@@ -255,75 +259,84 @@ var Search = function(options) {
       if (!val || !minChar) {
         return this.clear();
       }
-      if (val + '' === this.CACHE + '') {
+      if (val + "" === this.CACHE + "") {
         return;
       } else {
         this.CACHE = val;
       }
       this._doSearch();
     },
-    _doSearch: function() {
+    _doSearch: function () {
       this.ajax(this.handleResults, this);
     },
-    _onSelected: function(feature) {
+    _onSelected: function (feature) {
       console.log(feature);
     },
-    onSelected: function(choice) {
+    onSelected: function (choice) {
       return (this.options.onSelected || this._onSelected).call(this, choice);
     },
-    _formatResult: function(feature, el) {
-      var title = Utils.dom.create('strong', '', el);
-      var detailsContainer = Utils.dom.create('small', '', el);
+    _formatResult: function (feature, el) {
+      var title = Utils.dom.create("strong", "", el);
+      var detailsContainer = Utils.dom.create("small", "", el);
       var details = [];
       var type = this.formatType(feature);
       title.innerHTML = feature.properties.name;
       if (type) {
         details.push(type);
       }
-      if (feature.properties.city &&
-          feature.properties.city !== feature.properties.name) {
+      if (
+        feature.properties.city &&
+        feature.properties.city !== feature.properties.name
+      ) {
         details.push(feature.properties.city);
       }
       if (feature.properties.country) {
         details.push(feature.properties.country);
       }
-      detailsContainer.innerHTML = details.join(', ');
+      detailsContainer.innerHTML = details.join(", ");
     },
-    formatResult: function(feature, el) {
-      return (
-        this.options.formatResult || this._formatResult
-      ).call(this, feature, el);
+    formatResult: function (feature, el) {
+      return (this.options.formatResult || this._formatResult).call(
+        this,
+        feature,
+        el
+      );
     },
-    formatType: function(feature) {
-      return (
-        this.options.formatType || this._formatType
-      ).call(this, feature);
+    formatType: function (feature) {
+      return (this.options.formatType || this._formatType).call(this, feature);
     },
-    _formatType: function(feature) {
+    _formatType: function (feature) {
       // jscs:disable
       return feature.properties.osm_value;
       // jscs:enable
     },
-    createResult: function(feature) {
-      var el = Utils.dom.create('li', '', this.resultsContainer);
+    createResult: function (feature) {
+      var el = Utils.dom.create("li", "", this.resultsContainer);
       this.formatResult(feature, el);
       var result = {
         feature: feature,
-        el: el
+        el: el,
       };
       // Touch handling needed
-      el.addEventListener('mouseover', function(e) {
-        this.CURRENT = result;
-        this.highlight();
-      }.bind(this), false);
-      el.addEventListener('mousedown', function(e) {
-        this.setChoice();
-      }.bind(this));
+      el.addEventListener(
+        "mouseover",
+        function (e) {
+          this.CURRENT = result;
+          this.highlight();
+        }.bind(this),
+        false
+      );
+      el.addEventListener(
+        "mousedown",
+        function (e) {
+          this.setChoice();
+        }.bind(this)
+      );
       return result;
     },
-    resultToIndex: function(result) {
+    resultToIndex: function (result) {
       var out = null;
-      this.forEach(this.RESULTS, function(item, index) {
+      this.forEach(this.RESULTS, function (item, index) {
         if (item === result) {
           out = index;
           return;
@@ -331,29 +344,32 @@ var Search = function(options) {
       });
       return out;
     },
-    handleResults: function(geojson) {
+    handleResults: function (geojson) {
       this.clear();
-      this.resultsContainer.style.display = 'block';
+      this.resultsContainer.style.display = "block";
       this.resizeContainer();
-      this.forEach(geojson.features, function(feature) {
-        this.RESULTS.push(this.createResult(feature));
-      }.bind(this));
+      this.forEach(
+        geojson.features,
+        function (feature) {
+          this.RESULTS.push(this.createResult(feature));
+        }.bind(this)
+      );
       if (geojson.features.length === 0) {
         var noresult = Utils.dom.create(
-          'li',
-          'photon-no-result',
+          "li",
+          "photon-no-result",
           this.resultsContainer
         );
         noresult.innerHTML = this.options.noResultLabel;
       }
       if (this.options.feedbackEmail) {
         var feedback = Utils.dom.create(
-          'a',
-          'photon-feedback',
+          "a",
+          "photon-feedback",
           this.resultsContainer
         );
-        feedback.href = 'mailto:' + this.options.feedbackEmail;
-        feedback.innerHTML = 'Feedback';
+        feedback.href = "mailto:" + this.options.feedbackEmail;
+        feedback.innerHTML = "Feedback";
       }
       this.CURRENT = 0;
       this.highlight();
@@ -361,16 +377,19 @@ var Search = function(options) {
         this.options.resultsHandler(geojson);
       }
     },
-    highlight: function() {
-      this.forEach(this.RESULTS, function(item, index) {
-        if (index === this.CURRENT) {
-          Utils.dom.addClass(item.el, 'on');
-        } else {
-          Utils.dom.removeClass(item.el, 'on');
-        }
-      }.bind(this));
+    highlight: function () {
+      this.forEach(
+        this.RESULTS,
+        function (item, index) {
+          if (index === this.CURRENT) {
+            Utils.dom.addClass(item.el, "on");
+          } else {
+            Utils.dom.removeClass(item.el, "on");
+          }
+        }.bind(this)
+      );
     },
-    getLeft: function(el) {
+    getLeft: function (el) {
       var tmp = el.offsetLeft;
       el = el.offsetParent;
       while (el) {
@@ -379,7 +398,7 @@ var Search = function(options) {
       }
       return tmp;
     },
-    getTop: function(el) {
+    getTop: function (el) {
       var tmp = el.offsetTop;
       el = el.offsetParent;
       while (el) {
@@ -388,7 +407,7 @@ var Search = function(options) {
       }
       return tmp;
     },
-    getParams: function() {
+    getParams: function () {
       var x;
       var y;
       if (this.options.includePosition) {
@@ -401,54 +420,53 @@ var Search = function(options) {
         lang: this.options.lang,
         limit: this.options.limit,
         lat: y,
-        lon: x
+        lon: x,
       };
-    }
+    },
   });
 
-  var container = Utils.dom.create('div', null); //, 'ol-photon');
-  var input = Utils.dom.create('input', 'photon-input', container);
+  var container = Utils.dom.create("div", null); //, 'ol-photon');
+  var input = Utils.dom.create("input", "photon-input", container);
   var searchPhoton = Object.create(extended);
   extended.initialize(input, options);
   return container;
 };
 
-var Reverse = function(options) {
+var Reverse = function (options) {
   var extended = extend({}, PhotonBase.prototype, {
     options: {
-      url: 'http://photon.komoot.de/reverse/?',
+      url: "http://photon.komoot.de/reverse/?",
       limit: 1,
-      handleResults: null
+      handleResults: null,
     },
-    initialize: function(options) {
+    initialize: function (options) {
       this.options = extend({}, this.options, options);
     },
-    doReverse: function(coordinates) {
-      var eventReverse = new CustomEvent(
-        'selected', {
-          coordinates: coordinates
-        }
-      );
+    doReverse: function (coordinates) {
+      var eventReverse = new CustomEvent("selected", {
+        coordinates: coordinates,
+      });
       document.dispatchEvent(eventReverse);
       this.coordinates = coordinates;
       this.ajax(this.handleResults.bind(this), this);
     },
-    _handleResults: function(data) {
+    _handleResults: function (data) {
       // console.log(data);
     },
-    handleResults: function(data) {
-      return (
-        this.options.handleResults || this._handleResults
-      ).call(this, data);
+    handleResults: function (data) {
+      return (this.options.handleResults || this._handleResults).call(
+        this,
+        data
+      );
     },
-    getParams: function() {
+    getParams: function () {
       return {
         lang: this.options.lang,
         limit: this.options.limit,
         lat: this.coordinates[1],
-        lon: this.coordinates[0]
+        lon: this.coordinates[0],
       };
-    }
+    },
   });
   var reverse = Object.create(extended);
   reverse.initialize(options);
@@ -474,7 +492,7 @@ var Photon = {
     });
   },*/
   Reverse: Reverse,
-  Search: Search
+  Search: Search,
 };
 //ol.inherits(Photon.AddDomControl, ol.control.Control);
 
