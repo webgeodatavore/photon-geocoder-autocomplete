@@ -1,5 +1,5 @@
 {
-  "name": "photon-geocoder-autocomplete",
+  "name": "@webgeodatavore/photon-geocoder-autocomplete",
   "version": "2.0.0",
   "description": "Port of Leaflet plugin to use Photon geocoder for autocomplete. Work with any map library including OpenLayers",
   "main": "dist/photon-geocoder-autocomplete.min.js",
@@ -24,6 +24,9 @@
   ],
   "author": "Thomas Gratier <contact@webgeodatavore.com>",
   "license": "Apache 2.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "beefy": "^0.1.1",
     "browserify": "^17.0.0",
