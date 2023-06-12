@@ -26,7 +26,7 @@ function AddDomControl(dom) {
 AddDomControl.prototype.onAdd = function (map) {
   this._map = map;
   this._container = document.createElement("div");
-  this._container.className = "mapboxgl-ctrl photon-geocoder-autocomplete";
+  this._container.className = "maplibregl-ctrl photon-geocoder-autocomplete";
   this._container.appendChild(this._dom);
   return this._container;
 };
@@ -106,4 +106,4 @@ var container = new Photon.Search({
   feedbackEmail: null,
 });
 
-map.addControl(new AddDomControl(container));
+map.addControl(new AddDomControl(container), "top-right");
